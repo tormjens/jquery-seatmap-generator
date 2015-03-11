@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery Boilerplate</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script src="../dist/jquery.seatmaps.generator.js"></script>
+		<link href="../dist/jquery.seatmaps.generator.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="element"></div>
+		<script>
+			$(function() {
+				$("#element").seatmap({
+					onUpdate: function(data) {
+						console.log(data.length);
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

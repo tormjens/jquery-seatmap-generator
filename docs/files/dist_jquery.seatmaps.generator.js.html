@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>dist/jquery.seatmaps.generator.js - jquery-seatmaps-generator</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="jquery-seatmaps-generator" src="../assets/css/logo.png" style="max-height: 65%;" title="jquery-seatmaps-generator">
+            jquery-seatmaps-generator
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>1.0.0</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/SeatmapPlugin"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/SeatmapPlugin.html">SeatmapPlugin</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>dist/jquery.seatmaps.generator.js <small>File</small></h1>
+                        </div>
+                        
+                        <div class="file">
+                            <pre class="prettyprint linenums">
+                        /*
+                         *  jquery-seatmaps-generator - v1.0.0
+                         *  Easily create seatmaps
+                         *  http://tormorten.no
+                         *
+                         *  Made by Tor Morten Jensen
+                         *  Under MIT License
+                         */
+                        // the semi-colon before function invocation is a safety net against concatenated
+                        // scripts and/or other plugins which may not be closed properly.
+                        ;(function ( $, window, document, undefined ) {
+                        
+                        	&#x27;use strict&#x27;;
+                        
+                        		/**
+                        		* These are the main plugin variables.
+                        		*/
+                        		var pluginName = &#x27;seatmap&#x27;,
+                        			defaults = {
+                        				rows 		: 30, // number of rows to add by default when no data exists
+                        				cols 		: 30, // columns to add per row when no data exists
+                        				data 		: [], // the data already in place for the seatmap
+                        				classes 	: { // these classes correspond with the classes in our stylesheet
+                        					container	: &#x27;seatmap-container&#x27;,
+                        					row 		: &#x27;seatmap-row&#x27;,
+                        					column 		: &#x27;seatmap-col&#x27;,
+                        					controls 	: &#x27;seatmap-controls&#x27;,
+                        					states 		: {
+                        						&#x27;0&#x27;		: &#x27;default&#x27;,
+                        						&#x27;1&#x27;		: &#x27;seat&#x27;,
+                        						&#x27;2&#x27;		: &#x27;locked&#x27;,
+                        						&#x27;3&#x27;		: &#x27;taken&#x27;
+                        					}
+                        				},
+                        				containers	: {
+                        					controls 		: &#x27;&#x27;, // by default controls will be placed inside the element, but it could also be placed outside by passing a selector
+                        				},
+                        				multiple: 1, // enables multiple selection for building seatmaps
+                        				onUpdate: null, // run whenever something is updated in the seatmap
+                        				language: { // translations for strings
+                        					delete_row		: &#x27;Delete Row&#x27;,
+                        					delete_col 		: &#x27;Delete Column&#x27;,
+                        					new_row 		: &#x27;New Row&#x27;,
+                        					new_col 		: &#x27;New Column&#x27;,
+                        					clear_all 		: &#x27;Clear All&#x27;,
+                        					states 			: {
+                        						&#x27;0&#x27;			: &#x27;Standard&#x27;,
+                        						&#x27;1&#x27;			: &#x27;Seat&#x27;,
+                        						&#x27;2&#x27;			: &#x27;Locked&#x27;,
+                        						&#x27;3&#x27;			: &#x27;Taken&#x27;
+                        					}
+                        				}
+                        			};
+                        
+                        		/**
+                        		* The actual plugin constructor
+                        		*
+                        		* @class 	SeatmapPlugin
+                        		* @constructor
+                        		*/
+                        		function SeatmapPlugin ( element, options ) {
+                        				this.element 	= element;
+                        				this.settings 	= $.extend( {}, defaults, options );
+                        				$(this).data(&#x27;state&#x27;, &#x27;0&#x27;);
+                        				this._defaults 	= defaults;
+                        				this._name 		= pluginName;
+                        				this.init();
+                        		}
+                        
+                        		// Avoid SeatmapPlugin.prototype conflicts
+                        		$.extend(SeatmapPlugin.prototype, {
+                        
+                        			/**
+                        			* Initializes the plugin
+                        			* 
+                        			* @method 	init
+                        			* @return 	{Void}
+                        			*/
+                        			init: function () {
+                        
+                        				// add a wrapper class
+                        				$(this.element).addClass(&#x27;seatmap-wrapper&#x27;);
+                        
+                        				// set up the control interface
+                        				this.setupControls();
+                        
+                        				// build the seatmap interface
+                        				this.setupSeatmap();
+                        			},
+                        
+                        			/**
+                        			* Starts setting up the initial seatmap
+                        			*
+                        			* @method 	setupSeatmap
+                        			* @return 	{Void}
+                        			*/
+                        			setupSeatmap: function() {
+                        
+                        				// lets store the current instance for ourselves so we can fetch it in other scopes
+                        				var self = this;
+                        
+                        				// create the container for the seatmap
+                        				var container = $(&#x27;&lt;div class=&quot;&#x27;+ this.settings.classes.container + &#x27;&quot; /&gt;&#x27;).appendTo(self.element);
+                        
+                        				// add a delete column button on top of each column
+                        				var top_row = $(&#x27;&lt;div class=&quot;seatmap-top-row&quot;&gt;&lt;/div&gt;&#x27;).appendTo(container);
+                        
+                        				// figure out how many rows there are to create
+                        				var rows = this.settings.rows;
+                        				if( this.settings.data.length !== 0 ) {
+                        					rows = this.settings.data.length;
+                        				}
+                        
+                        				// create said number of rows
+                        				for (var i = 0; i &lt; rows; i++) {
+                        					this.addRow(i, container);
+                        				}
+                        
+                        				// bind events on the seatmap
+                        				this.bindSeatmap();
+                        			},
+                        
+                        			/**
+                        			* Adds a row to the seatmap
+                        			*
+                        			* @method 	addRow
+                        			* @param 	{Integer} 		i			The row ID
+                        			* @param 	{Object} 		container 	The element where the row should be placed
+                        			* @return 	{Object} 					The newly created DOM element
+                        			*/
+                        			addRow: function(i, container) {
+                        				// append the row element
+                        				var row = $(&#x27;&lt;div class=&quot;&#x27;+ this.settings.classes.row + &#x27;&quot;&gt;&lt;/div&gt;&#x27;).appendTo(container);
+                        
+                        				// change the data attribute for the row
+                        				row.attr(&#x27;data-row&#x27;, i);
+                        
+                        				// find the total number of columns
+                        				var cols = this.settings.cols;
+                        				if( this.settings.data.length !== 0 ) {
+                        					cols = this.settings.data[i].cols.length;
+                        				}
+                        
+                        				// add each column
+                        				for (var c = 0; c &lt; cols; c++) {
+                        					this.addCol(c, row);
+                        				}
+                        
+                        				// at the end of each row, add a delete button
+                        				$(&#x27;&lt;button class=&quot;seatmap-delete-row&quot; data-row=&quot;&#x27;+ i +&#x27;&quot; title=&quot;&#x27;+this.settings.language.delete_row+&#x27;&quot;&gt;&amp;times;&lt;/button&gt;&#x27;).appendTo(row);
+                        
+                        				return row;
+                        			},
+                        
+                        			/**
+                        			* Adds a column to the seatmap
+                        			*
+                        			* @method 	addCol
+                        			* @param 	{Integer} 		c			The column ID
+                        			* @param 	{Object} 		row 		The row where the column should be placed
+                        			* @return 	{Object} 					The newly created DOM element
+                        			*/
+                        			addCol: function(c, row) {
+                        				var col = $(&#x27;&lt;div class=&quot;&#x27;+ this.settings.classes.column + &#x27;&quot;&gt;&lt;/div&gt;&#x27;).appendTo(row);
+                        				col.attr(&#x27;data-col&#x27;, c);
+                        				col.attr(&#x27;data-state&#x27;, &#x27;0&#x27;);
+                        
+                        				if(row.data(&#x27;row&#x27;) === 0) {
+                        					var top_row = $(this.element).find(&#x27;.seatmap-top-row&#x27;);
+                        					var button = $(&#x27;&lt;button class=&quot;seatmap-delete-col&quot; data-col=&quot;&#x27;+ c +&#x27;&quot; title=&quot;&#x27;+this.settings.language.delete_col+&#x27;&quot;&gt;&amp;times;&lt;/button&gt;&#x27;).appendTo(top_row);
+                        					button.attr(&#x27;data-col&#x27;, c);
+                        				}
+                        
+                        				return col;
+                        			},
+                        
+                        			/**
+                        			* Sets up the controls
+                        			*
+                        			* @method 	setupControls
+                        			* @return 	{Void}
+                        			*/
+                        			setupControls: function() {
+                        				
+                        				var controls;
+                        
+                        				// create the controls
+                        				// if a container has not been set, use the instance
+                        				if( this.settings.containers.controls === &#x27;&#x27; ) {
+                        					controls = this.element;
+                        				}
+                        				// if it has, use it baby
+                        				else {
+                        					controls = this.settings.containers.controls;
+                        				}
+                        
+                        				// append the container
+                        				controls = $(&#x27;&lt;div class=&quot;&#x27;+ this.settings.classes.controls + &#x27;&quot; /&gt;&#x27;).appendTo(controls);
+                        
+                        				// add the &quot;new row&quot;-interface
+                        				controls.append(&#x27;&lt;button class=&quot;seatmap-controls-new-row&quot;&gt;&#x27;+ this.settings.language.new_row +&#x27;&lt;/button&gt;&#x27;);
+                        
+                        				// add the &quot;new row&quot;-interface
+                        				controls.append(&#x27;&lt;button class=&quot;seatmap-controls-new-col&quot;&gt;&#x27;+ this.settings.language.new_col +&#x27;&lt;/button&gt;&#x27;);
+                        
+                        				// add the &quot;new row&quot;-interface
+                        				controls.append(&#x27;&lt;button class=&quot;seatmap-controls-clear&quot;&gt;&#x27;+ this.settings.language.clear_all +&#x27;&lt;/button&gt;&#x27;);
+                        
+                        				// set up the state changer
+                        				var states = $(&#x27;&lt;div class=&quot;seatmap-states&quot; /&gt;&#x27;).appendTo(controls);
+                        				states.append(&#x27;&lt;button class=&quot;seatmap-state-change&quot; data-state=&quot;0&quot;&gt;&#x27;+ this.settings.language.states[&#x27;0&#x27;] +&#x27;&lt;/button&gt;&#x27;);
+                        				states.append(&#x27;&lt;button class=&quot;seatmap-state-change&quot; data-state=&quot;1&quot;&gt;&#x27;+ this.settings.language.states[&#x27;1&#x27;] +&#x27;&lt;/button&gt;&#x27;);
+                        				states.append(&#x27;&lt;button class=&quot;seatmap-state-change&quot; data-state=&quot;2&quot;&gt;&#x27;+ this.settings.language.states[&#x27;2&#x27;] +&#x27;&lt;/button&gt;&#x27;);
+                        				states.append(&#x27;&lt;button class=&quot;seatmap-state-change&quot; data-state=&quot;3&quot;&gt;&#x27;+ this.settings.language.states[&#x27;3&#x27;] +&#x27;&lt;/button&gt;&#x27;);
+                        
+                        				this.bindControls(controls);
+                        
+                        			},
+                        
+                        			/**
+                        			* Binds clicks and other events to the seatmap
+                        			*
+                        			* @method 	bindSeatmap
+                        			* @return 	{Void}
+                        			*/
+                        			bindSeatmap: function() {
+                        
+                        				var self = this;
+                        
+                        				// find where the container is
+                        				var container = $(this.element).find(&#x27;.&#x27;+this.settings.classes.container);
+                        				
+                        				// only add the dragselect interface
+                        				if( this.settings.multiple ) {
+                        
+                        					// by default the mouse is not down
+                        					var isMouseDown = false;
+                        
+                        					// check for both mousedown and mousemove
+                        					container
+                        						.on( &#x27;mousedown&#x27;, &#x27;.&#x27;+ this.settings.classes.column, function () {
+                        							isMouseDown = true;
+                        							self.toggleSeat($(this));
+                        							return false; // prevent text selection
+                        						})
+                        						.on( &#x27;mouseover&#x27;, &#x27;.&#x27;+ this.settings.classes.column, function () {
+                        							if (isMouseDown) {
+                        								self.toggleSeat($(this));
+                        							}
+                        						});
+                        
+                        					// when the mouse is released, the mouse is not down
+                        					container
+                        						.on(&#x27;mouseup&#x27;, function () {
+                        							isMouseDown = false;
+                        							if (typeof self.settings.onUpdate === &#x27;function&#x27;) { // make sure the callback is a function
+                        								var obj = self.buildObject();
+                        						        self.settings.onUpdate.call(this, obj); // brings the scope to the callback
+                        						    }
+                        						});
+                        
+                        				}
+                        
+                        				// 
+                        			},
+                        
+                        			/**
+                        			* Toggles a seat with the current state
+                        			*
+                        			* @method 	toggleSeat
+                        			* @param 	{String} 		seat		The seat to be toggled
+                        			* @return 	{Void}
+                        			*/
+                        			toggleSeat: function(seat) {
+                        				var state 		= $(seat).data(&#x27;state&#x27;);
+                        
+                        				state 		= $(this).data(&#x27;state&#x27;);
+                        
+                        				var stateClass 	= this.settings.classes.states[state];
+                        
+                        				$(seat).toggleClass(stateClass);
+                        
+                        			},
+                        
+                        			/**
+                        			* Builds an object of the entire seatmap.
+                        			* To be used in save processes etc
+                        			*
+                        			* @method 	buildObject
+                        			* @return 	{Object}					An object
+                        			*/
+                        			buildObject: function() {
+                        
+                        				var self 	= this, 
+                        					obj 	= [], 
+                        					rows 	= $(self.element).find(&#x27;.&#x27;+ self.settings.classes.row);
+                        
+                        				rows.each(function() {
+                        					var row_id 	= $(this).data(&#x27;row&#x27;),
+                        						row 	= {row_id: row_id, cols: []};
+                        					
+                        					$(this).find(&#x27;.&#x27;+ self.settings.classes.column).each(function() {
+                        						var col_id 	= $(this).data(&#x27;col&#x27;),
+                        							state 	= $(this).data(&#x27;state&#x27;);
+                        
+                        						row.cols.push({ col_id: col_id, state: state });
+                        					});
+                        					obj[row_id] = row;
+                        				});
+                        
+                        				return obj;
+                        
+                        			},
+                        
+                        			/**
+                        			* Gets the current control state
+                        			*
+                        			* @method 	getCurrentState
+                        			* @return 	{String}					The current state
+                        			*/
+                        			getCurrentState: function() {
+                        				return $(this).data(&#x27;state&#x27;);
+                        			},
+                        
+                        			/**
+                        			* Changes the current control state
+                        			*
+                        			* @method 	changeState
+                        			* @param 	{String} 		state		The new state
+                        			* @return 	{Void}
+                        			*/
+                        			changeState: function(state) {
+                        				$(this).data(&#x27;state&#x27;, state);
+                        			},
+                        
+                        			/**
+                        			* Gets the next availiable row number
+                        			*
+                        			* @method 	getNextRowNumber
+                        			* @return 	{Integer}					A number representing the next row number
+                        			*/
+                        			getNextRowNumber: function() {
+                        				var rows 	= $(this.element).find(&#x27;.&#x27;+ this.settings.classes.row);
+                        
+                        				var ids 	= [];
+                        
+                        				rows.each(function() {
+                        					ids.push($(this).data(&#x27;row&#x27;));
+                        				});
+                        
+                        				return (Math.max.apply(Math, ids) + 1);
+                        			},
+                        
+                        			/**
+                        			* Gets the next availiable column number
+                        			*
+                        			* @method 	getNextColNumber
+                        			* @return 	{Integer}					A number representing the next column number
+                        			*/
+                        			getNextColNumber: function() {
+                        				var row 	= $(this.element).find(&#x27;.&#x27;+ this.settings.classes.row).last(),
+                        					cols 	= row.find(&#x27;.&#x27;+ this.settings.classes.column);
+                        
+                        				console.log(row);
+                        
+                        				var ids 	= [];
+                        
+                        				cols.each(function() {
+                        					ids.push($(this).data(&#x27;col&#x27;));
+                        				});
+                        
+                        				return (Math.max.apply(Math, ids) + 1);
+                        			},
+                        
+                        			/**
+                        			* Updates the row ids to their are &quot;symetric&quot;
+                        			*
+                        			* @method 	updateRowIds
+                        			* @return 	{Void}
+                        			*/
+                        			updateRowIds: function() {
+                        				var rows 	= $(this.element).find(&#x27;.&#x27;+ this.settings.classes.row),
+                        					row_id 		= 0;
+                        
+                        				rows.each(function() {
+                        					var row = $(this);
+                        
+                        					row.find(&#x27;.seatmap-delete-row&#x27;).attr(&#x27;data-row&#x27;, row_id);
+                        
+                        					row.attr(&#x27;data-row&#x27;, row_id);
+                        
+                        					row_id++;
+                        				});
+                        			},
+                        
+                        			/**
+                        			* Updates the column ids to their are &quot;symetric&quot;
+                        			*
+                        			* @method 	updateColIds
+                        			* @return 	{Void}
+                        			*/
+                        			updateColIds: function() {
+                        
+                        				var self = this;
+                        
+                        				var rows 	= $(this.element).find(&#x27;.&#x27;+ this.settings.classes.row);
+                        
+                        				rows.each(function() {
+                        					var row = $(this);
+                        					var cols 	= row.find(&#x27;.&#x27;+ self.settings.classes.column);
+                        					var col_id 	= 0;
+                        					cols.each(function() {
+                        						$(this).attr(&#x27;data-col&#x27;, col_id);
+                        						col_id++;
+                        					});
+                        				});
+                        
+                        				var top_row = $(this.element).find(&#x27;.seatmap-top-row&#x27;);
+                        
+                        				var col_id 	= 0;
+                        				top_row.find(&#x27;.seatmap-delete-col&#x27;).each(function() {
+                        					$(this).attr(&#x27;data-col&#x27;, col_id);
+                        					col_id++;
+                        				});
+                        
+                        			},
+                        
+                        			/**
+                        			* Binds clicks and other events to the controls
+                        			*
+                        			* @method 	bindControls
+                        			* @param 	{Object} 		controls	The DOM element for the controls
+                        			* @return 	{Void}
+                        			*/
+                        			bindControls: function(controls) {
+                        
+                        				var self = this;
+                        
+                        				controls.on(&#x27;click&#x27;, &#x27;.seatmap-state-change&#x27;, function() {
+                        
+                        					$(&#x27;.seatmap-state-change&#x27;).not(this).removeClass(&#x27;active&#x27;);
+                        
+                        					$(this).toggleClass(&#x27;active&#x27;);
+                        
+                        					if( self.getCurrentState() === $(this).data(&#x27;state&#x27;)) {
+                        						self.changeState(&#x27;0&#x27;);
+                        					}
+                        					self.changeState($(this).data(&#x27;state&#x27;));
+                        
+                        				});
+                        
+                        				$(controls).find(&#x27;.seatmap-state-change&#x27; +&#x27;[data-state=&quot;1&quot;]&#x27;).trigger(&#x27;click&#x27;);
+                        
+                        				controls.on(&#x27;click&#x27;, &#x27;.seatmap-controls-new-row&#x27;, function() {
+                        
+                        					var container = $(self.element).find(&#x27;.&#x27; + self.settings.classes.container);
+                        
+                        					var row = $(self.element).find(&#x27;.&#x27; + self.settings.classes.row).last().clone().appendTo(container);
+                        
+                        					row.find(&#x27;.&#x27;+self.settings.classes.column).each(function() {
+                        						$(this).removeClass();
+                        						$(this).addClass(self.settings.classes.column);
+                        					});
+                        
+                        					var row_id = self.getNextRowNumber();
+                        
+                        					row.find(&#x27;.seatmap-delete-row&#x27;).attr(&#x27;data-row&#x27;, row_id);
+                        
+                        					row.attr(&#x27;data-row&#x27;, row_id);
+                        
+                        					self.bindSeatmap();
+                        
+                        				});
+                        
+                        				controls.on(&#x27;click&#x27;, &#x27;.seatmap-controls-new-col&#x27;, function() {
+                        
+                        					var rows 	= $(self.element).find(&#x27;.&#x27;+ self.settings.classes.row);
+                        
+                        					rows.each(function() {
+                        
+                        						var c = self.getNextColNumber();
+                        
+                        						var row = $(this);
+                        
+                        						var last_col = row.find(&#x27;.&#x27;+self.settings.classes.column).last();
+                        						var col = $(&#x27;&lt;div class=&quot;&#x27;+ self.settings.classes.column + &#x27;&quot;&gt;&lt;/div&gt;&#x27;).insertAfter(last_col);
+                        
+                        						col.attr(&#x27;data-col&#x27;, c);
+                        						col.attr(&#x27;data-state&#x27;, &#x27;0&#x27;);
+                        
+                        						if(row.data(&#x27;row&#x27;) === 0) {
+                        							var top_row = $(self.element).find(&#x27;.seatmap-top-row&#x27;);
+                        							var button = $(&#x27;&lt;button class=&quot;seatmap-delete-col&quot; data-col=&quot;&#x27;+ c +&#x27;&quot; title=&quot;&#x27;+self.settings.language.delete_col+&#x27;&quot;&gt;&amp;times;&lt;/button&gt;&#x27;).appendTo(top_row);
+                        							button.attr(&#x27;data-col&#x27;, c);
+                        						}
+                        
+                        					});
+                        
+                        				});
+                        
+                        				$(self.element).on(&#x27;click&#x27;, &#x27;.seatmap-delete-row&#x27;, function() {
+                        					$(this).parent().remove();
+                        					self.updateRowIds();
+                        				});
+                        
+                        				$(self.element).on(&#x27;click&#x27;, &#x27;.seatmap-delete-col&#x27;, function() {
+                        					$(self.element).find(&#x27;.&#x27;+ self.settings.classes.column +&#x27;[data-col=&quot;&#x27;+ $(this).data(&#x27;col&#x27;) +&#x27;&quot;]&#x27;).remove();
+                        					$(this).remove();
+                        					self.updateColIds();
+                        				});
+                        
+                        			},
+                        
+                        		});
+                        
+                        		// A really lightweight plugin wrapper around the constructor,
+                        		// preventing against multiple instantiations
+                        		$.fn[ pluginName ] = function ( options, callback ) {
+                        			return this.each(function() {
+                        
+                        				if ( !$.data( this, &#x27;plugin_&#x27; + pluginName ) ) {
+                        					$.data( this, &#x27;plugin_&#x27; + pluginName, new SeatmapPlugin( this, options ) );
+                        				}
+                        
+                        				if(typeof callback === &#x27;string&#x27;) {
+                        
+                        				}
+                        
+                        
+                        			});
+                        		};
+                        
+                        })( jQuery, window, document );
+                        
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

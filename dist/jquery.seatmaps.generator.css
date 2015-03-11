@@ -1,0 +1,66 @@
+/*
+ *  jquery-seatmaps-generator - v1.0.0
+ *  Easily create seatmaps
+ *  http://tormorten.no
+ *
+ *  Made by Tor Morten Jensen
+ *  Under MIT License
+ */
+.selection {
+  position: absolute;
+  background-color: red;
+}
+
+.seatmap-wrapper {
+  position: relative;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row, .seatmap-wrapper .seatmap-container .seatmap-top-row {
+  margin: 0px 0px 1px 0px;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row:after, .seatmap-wrapper .seatmap-container .seatmap-top-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-col {
+  width: 20px;
+  height: 20px;
+  background-color: #cccccc;
+  float: left;
+  margin: 0px 1px 0px 0px;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col:first-child, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-col:first-child {
+  margin-left: 0;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col:last-child, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-col:last-child {
+  margin-right: 0;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col:hover, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-col:hover {
+  background-color: #b3b3b3;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col.seat, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-col.seat {
+  background-color: blue;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col.locked, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-col.locked {
+  background-color: green;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col.taken, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-col.taken {
+  background-color: red;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col.selected, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-col.selected {
+  opacity: 0.5;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-delete-row, .seatmap-wrapper .seatmap-container .seatmap-row .seatmap-delete-col, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-delete-row, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-delete-col {
+  border: none;
+  background-color: red;
+  color: #fff;
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin: 0px 1px 0px 0px;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-delete-row:hover, .seatmap-wrapper .seatmap-container .seatmap-row .seatmap-delete-col:hover, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-delete-row:hover, .seatmap-wrapper .seatmap-container .seatmap-top-row .seatmap-delete-col:hover {
+  background-color: #cc0000;
+}
+
+/*# sourceMappingURL=main.css.map */

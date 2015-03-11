@@ -1,0 +1,23 @@
+.seatmap-wrapper .seatmap-container .seatmap-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col {
+  width: 20px;
+  height: 20px;
+  background-color: gray;
+  float: left;
+  margin: 1px;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col:first-child {
+  margin-left: 0;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col:last-child {
+  margin-right: 0;
+}
+.seatmap-wrapper .seatmap-container .seatmap-row .seatmap-col:hover {
+  background-color: #676767;
+}
+
+/*# sourceMappingURL=files.map */

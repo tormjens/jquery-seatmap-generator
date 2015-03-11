@@ -1,0 +1,47 @@
+{
+  "name": "jquery-seatmaps-generator",
+  "version": "1.0.0",
+  "description": "Easily create seatmaps",
+  "keywords": [
+    "jquery",
+    "plugin",
+    "seatmaps",
+    "generator",
+    "jquery-plugin",
+    "jquery-seatmaps-generator"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jquery-boilerplate/jquery-boilerplate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jquery-boilerplate/jquery-boilerplate/issues"
+  },
+  "author": {
+    "name": "Tor Morten Jensen",
+    "email": "tormorten@tormorten.no",
+    "url": "https://github.com/tormjens"
+  },
+  "homepage": "http://tormorten.no",
+  "contributors": [],
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-bowercopy": "^1.2.0",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-coffee": "^0.12.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-sass": "^0.7.3",
+    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-yuidoc": "^0.7.0",
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.9.2",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.1.0"
+  },
+  "scripts": {
+    "test": "grunt travis --verbose"
+  }
+}

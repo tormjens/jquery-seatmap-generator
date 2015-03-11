@@ -1,0 +1,274 @@
+{
+    "project": {
+        "name": "jquery-seatmaps-generator",
+        "description": "Easily create seatmaps",
+        "version": "1.0.0",
+        "url": "http://tormorten.no"
+    },
+    "files": {
+        "dist/jquery.seatmaps.generator.js": {
+            "name": "dist/jquery.seatmaps.generator.js",
+            "modules": {},
+            "classes": {
+                "SeatmapPlugin": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "SeatmapPlugin": {
+            "name": "SeatmapPlugin",
+            "shortname": "SeatmapPlugin",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 55,
+            "description": "The actual plugin constructor",
+            "is_constructor": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 15,
+            "description": "These are the main plugin variables.",
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 73,
+            "description": "Initializes the plugin",
+            "itemtype": "method",
+            "name": "init",
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 91,
+            "description": "Starts setting up the initial seatmap",
+            "itemtype": "method",
+            "name": "setupSeatmap",
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 123,
+            "description": "Adds a row to the seatmap",
+            "itemtype": "method",
+            "name": "addRow",
+            "params": [
+                {
+                    "name": "i",
+                    "description": "The row ID",
+                    "type": "Integer"
+                },
+                {
+                    "name": "container",
+                    "description": "The element where the row should be placed",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The newly created DOM element",
+                "type": "Object"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 155,
+            "description": "Adds a column to the seatmap",
+            "itemtype": "method",
+            "name": "addCol",
+            "params": [
+                {
+                    "name": "c",
+                    "description": "The column ID",
+                    "type": "Integer"
+                },
+                {
+                    "name": "row",
+                    "description": "The row where the column should be placed",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The newly created DOM element",
+                "type": "Object"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 177,
+            "description": "Sets up the controls",
+            "itemtype": "method",
+            "name": "setupControls",
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 220,
+            "description": "Binds clicks and other events to the seatmap",
+            "itemtype": "method",
+            "name": "bindSeatmap",
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 267,
+            "description": "Toggles a seat with the current state",
+            "itemtype": "method",
+            "name": "toggleSeat",
+            "params": [
+                {
+                    "name": "seat",
+                    "description": "The seat to be toggled",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 285,
+            "description": "Builds an object of the entire seatmap.\nTo be used in save processes etc",
+            "itemtype": "method",
+            "name": "buildObject",
+            "return": {
+                "description": "An object",
+                "type": "Object"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 315,
+            "description": "Gets the current control state",
+            "itemtype": "method",
+            "name": "getCurrentState",
+            "return": {
+                "description": "The current state",
+                "type": "String"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 325,
+            "description": "Changes the current control state",
+            "itemtype": "method",
+            "name": "changeState",
+            "params": [
+                {
+                    "name": "state",
+                    "description": "The new state",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 336,
+            "description": "Gets the next availiable row number",
+            "itemtype": "method",
+            "name": "getNextRowNumber",
+            "return": {
+                "description": "A number representing the next row number",
+                "type": "Integer"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 354,
+            "description": "Gets the next availiable column number",
+            "itemtype": "method",
+            "name": "getNextColNumber",
+            "return": {
+                "description": "A number representing the next column number",
+                "type": "Integer"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 375,
+            "description": "Updates the row ids to their are \"symetric\"",
+            "itemtype": "method",
+            "name": "updateRowIds",
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 396,
+            "description": "Updates the column ids to their are \"symetric\"",
+            "itemtype": "method",
+            "name": "updateColIds",
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "class": "SeatmapPlugin"
+        },
+        {
+            "file": "dist/jquery.seatmaps.generator.js",
+            "line": 428,
+            "description": "Binds clicks and other events to the controls",
+            "itemtype": "method",
+            "name": "bindControls",
+            "params": [
+                {
+                    "name": "controls",
+                    "description": "The DOM element for the controls",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "class": "SeatmapPlugin"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type\nThese are the main plugin variables.",
+            "line": " dist/jquery.seatmaps.generator.js:15"
+        }
+    ]
+}

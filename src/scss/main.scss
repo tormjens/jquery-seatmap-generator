@@ -1,0 +1,116 @@
+// /*	
+// 	* 	Main style file
+//  *	
+//  *  	jquery-seatmaps-generator - v1.0.0
+//  *  	Easily create seatmaps
+//  *  	http://tormorten.no
+//  *
+//  *  	Made by Tor Morten Jensen
+//  *  	Under MIT License
+//  */
+
+// Import other files
+@import "_mixins";
+
+// Define colors
+$default	: lighten(gray, 30%) !default;
+$success	: green !default;
+$warn		: red !default;
+$primary 	: blue !default;
+
+// Sizes
+$col-width 	: 20px !default;
+$col-height	: 20px !default;
+
+// Column Spacing
+$col-right 	: 1px !default;
+$col-left 	: 0px !default;
+$col-top 	: 0px !default;
+$col-bottom	: 0px !default;
+
+// Row Spacing
+$row-right 	: 0px !default;
+$row-left 	: 0px !default;
+$row-top 	: 0px !default;
+$row-bottom	: 1px !default;
+
+.selection {
+	position: absolute;
+	background-color: red;
+	// display: none;
+}
+
+// Could apply styles to the wrapper
+.seatmap-wrapper {
+	position: relative;
+	
+	// We could do it the container, but naa
+	.seatmap-container {
+		
+		// Styles for every row
+		.seatmap-row, .seatmap-top-row {
+			@include clearfix;
+			margin: $row-top $row-right $row-bottom $row-left;
+			// Styles for every column
+			.seatmap-col {
+				width: $col-width;
+				height: $col-height;
+				background-color: $default;
+				float: left;
+				margin: $col-top $col-right $col-bottom $col-left;
+
+				// Do stuff to the first column of each row
+				&:first-child {
+					margin-left: 0;
+				}
+
+				// Do stuff to the last column of each row
+				&:last-child {
+					margin-right: 0;
+				}
+
+				// Change hover
+				&:hover {
+					background-color: darken($default, 10%);
+				}
+
+				// For elements of state seat
+				&.seat {
+					background-color: $primary;
+				}
+
+				// For elements of state locked
+				&.locked {
+					background-color: $success;
+				}
+
+				// For elements of state taken
+				&.taken {
+					background-color: $warn;
+				}
+
+				// For when an element has been selected
+				&.selected {
+					opacity: 0.5;
+				}
+			}
+
+			// style the delete row button
+			.seatmap-delete-row, .seatmap-delete-col {
+				border: none;
+				background-color: $warn;
+				color: #fff;
+				float: left;
+				width: $col-width;
+				height: $col-height;
+				margin: $col-top $col-right $col-bottom $col-left;
+				// Change hover
+				&:hover {
+					background-color: darken($warn, 10%);
+				}
+			}
+
+		}
+
+	}
+}

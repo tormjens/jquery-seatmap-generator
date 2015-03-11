@@ -1,0 +1,19 @@
+{
+	"name": "jquery-seatmaps-generator",
+	"version": "1.0.0",
+	"homepage": "http://tormorten.no",
+	"authors": [
+		"Tor Morten Jensen <tormorten@tormorten.no>"
+	],
+	"description": "Easily create seatmaps",
+	"main": "src/jquery.seatmaps.generator.js",
+	"keywords": [
+		"jquery",
+		"plugin",
+		"seatmaps",
+		"generator",
+		"jquery-plugin",
+		"jquery-seatmaps-generator"
+	],
+	"license": "MIT"
+}

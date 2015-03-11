@@ -1,0 +1,18 @@
+// /*	
+// 	* 	Mixins
+//  *	
+//  *  	jquery-seatmaps-generator - v1.0.0
+//  *  	Easily create seatmaps
+//  *  	http://tormorten.no
+//  *
+//  *  	Made by Tor Morten Jensen
+//  *  	Under MIT License
+//  */
+
+@mixin clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
