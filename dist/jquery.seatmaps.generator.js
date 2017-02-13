@@ -72,7 +72,7 @@
 
 			/**
 			* Initializes the plugin
-			* 
+			*
 			* @method 	init
 			* @return 	{Void}
 			*/
@@ -181,7 +181,7 @@
 			* @return 	{Void}
 			*/
 			setupControls: function() {
-				
+
 				var controls;
 
 				// create the controls
@@ -229,7 +229,7 @@
 
 				// find where the container is
 				var container = $(this.element).find('.'+this.settings.classes.container);
-				
+
 				// only add the dragselect interface
 				if( this.settings.multiple ) {
 
@@ -261,7 +261,7 @@
 
 				}
 
-				// 
+				//
 			},
 
 			/**
@@ -291,14 +291,14 @@
 			*/
 			buildObject: function() {
 
-				var self 	= this, 
-					obj 	= [], 
+				var self 	= this,
+					obj 	= [],
 					rows 	= $(self.element).find('.'+ self.settings.classes.row);
 
 				rows.each(function() {
 					var row_id 	= $(this).data('row'),
 						row 	= {row_id: row_id, cols: []};
-					
+
 					$(this).find('.'+ self.settings.classes.column).each(function() {
 						var col_id 	= $(this).data('col'),
 							state 	= $(this).data('state');
@@ -515,15 +515,17 @@
 
 		// A really lightweight plugin wrapper around the constructor,
 		// preventing against multiple instantiations
-		$.fn[ pluginName ] = function ( options, callback ) {
+		$.fn[ pluginName ] = function ( options, args ) {
 			return this.each(function() {
 
 				if ( !$.data( this, 'plugin_' + pluginName ) ) {
 					$.data( this, 'plugin_' + pluginName, new SeatmapPlugin( this, options ) );
 				}
 
-				if(typeof callback === 'string') {
 
+				if( typeof options === 'string' && $.data( this, 'plugin_' + pluginName ) ) {
+					var plugin = $.data( this, 'plugin_' + pluginName );
+					return plugin[options].call(plugin, args);
 				}
 
 
